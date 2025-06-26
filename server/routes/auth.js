@@ -5,6 +5,11 @@ import { auth } from '../middleware/auth.js';
 
 const router = express.Router();
 
+const JWT_SECRET = 'qXqj1UwWsF32XwnKAnXN5k3hwfsE55qadu6V2dN8GHM6sQJWmBx';
+if (!JWT_SECRET) {
+  throw new Error('JWT_SECRET environment variable is not set!');
+}
+
 // Register
 router.post('/register', async (req, res) => {
   try {
@@ -37,7 +42,7 @@ router.post('/register', async (req, res) => {
     // Generate token
     const token = jwt.sign(
       { userId: user._id },
-      process.env.JWT_SECRET || 'myquizzz_secret_key',
+      JWT_SECRET,
       { expiresIn: '7d' }
     );
 
@@ -86,7 +91,7 @@ router.post('/login', async (req, res) => {
     // Generate token
     const token = jwt.sign(
       { userId: user._id },
-      process.env.JWT_SECRET || 'myquizzz_secret_key',
+      JWT_SECRET,
       { expiresIn: '7d' }
     );
 

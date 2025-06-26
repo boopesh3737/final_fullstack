@@ -23,6 +23,8 @@ interface DashboardData {
   upcomingTournaments: any[];
 }
 
+const BACKEND_URL = import.meta.env.VITE_BACKEND_URL;
+
 const DashboardPage = () => {
   const { user } = useAuthStore();
   const [dashboardData, setDashboardData] = useState<DashboardData | null>(null);
@@ -31,7 +33,7 @@ const DashboardPage = () => {
   useEffect(() => {
     const fetchDashboardData = async () => {
       try {
-        const response = await axios.get('http://localhost:5000/api/user/dashboard');
+        const response = await axios.get(`${BACKEND_URL}/api/user/dashboard`);
         setDashboardData(response.data);
       } catch (error) {
         console.error('Failed to fetch dashboard data:', error);
@@ -244,7 +246,7 @@ const DashboardPage = () => {
         </div>
 
         {/* Achievements Section */}
-        {user?.stats?.badges?.length > 0 && (
+        {(user?.stats?.badges?.length ?? 0) > 0 && (
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
@@ -253,7 +255,7 @@ const DashboardPage = () => {
           >
             <h2 className="text-xl font-bold text-white mb-6">Recent Achievements</h2>
             <div className="flex flex-wrap gap-4">
-              {user.stats.badges.map((badge, index) => (
+              {user?.stats?.badges?.map((badge, index) => (
                 <div
                   key={index}
                   className="flex items-center space-x-2 bg-gradient-to-r from-yellow-500/20 to-orange-500/20 px-4 py-2 rounded-lg border border-yellow-500/30"

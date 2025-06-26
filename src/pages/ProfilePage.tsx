@@ -36,6 +36,8 @@ interface UserProfile {
   createdAt: string;
 }
 
+const BACKEND_URL = import.meta.env.VITE_BACKEND_URL;
+
 const ProfilePage = () => {
   const { id } = useParams();
   const navigate = useNavigate();
@@ -61,7 +63,7 @@ const ProfilePage = () => {
           return;
         }
 
-        const response = await axios.get(`http://localhost:5000/api/user/profile/${profileId}`);
+        const response = await axios.get(`${BACKEND_URL}/api/user/profile/${profileId}`);
         setProfile(response.data);
         
         if (isOwnProfile) {
@@ -90,7 +92,7 @@ const ProfilePage = () => {
 
     setIsSaving(true);
     try {
-      const response = await axios.put('http://localhost:5000/api/user/profile', editData);
+      const response = await axios.put(`${BACKEND_URL}/api/user/profile`, editData);
       setProfile(response.data);
       updateUser(response.data);
       setIsEditing(false);

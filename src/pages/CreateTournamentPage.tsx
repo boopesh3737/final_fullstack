@@ -31,6 +31,8 @@ interface Prize {
   points: number;
 }
 
+const BACKEND_URL = import.meta.env.VITE_BACKEND_URL;
+
 const CreateTournamentPage = () => {
   const navigate = useNavigate();
   const [isLoading, setIsLoading] = useState(false);
@@ -57,7 +59,7 @@ const CreateTournamentPage = () => {
   useEffect(() => {
     const fetchUserQuizzes = async () => {
       try {
-        const response = await axios.get('http://localhost:5000/api/quiz/user/created');
+        const response = await axios.get(`${BACKEND_URL}/api/quiz/user/created`);
         setAvailableQuizzes(response.data);
       } catch (error) {
         console.error('Failed to fetch quizzes:', error);
@@ -122,7 +124,7 @@ const CreateTournamentPage = () => {
 
     setIsLoading(true);
     try {
-      const response = await axios.post('http://localhost:5000/api/tournament', {
+      const response = await axios.post(`${BACKEND_URL}/api/tournament`, {
         ...tournamentData,
         quiz: tournamentData.quizId,
         prizes: prizes.sort((a, b) => a.position - b.position)

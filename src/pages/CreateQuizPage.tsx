@@ -23,6 +23,8 @@ interface Question {
   timeLimit: number;
 }
 
+const BACKEND_URL = import.meta.env.VITE_BACKEND_URL;
+
 const CreateQuizPage = () => {
   const navigate = useNavigate();
   const [isLoading, setIsLoading] = useState(false);
@@ -133,7 +135,7 @@ const CreateQuizPage = () => {
 
     setIsLoading(true);
     try {
-      const response = await axios.post('http://localhost:5000/api/quiz', {
+      const response = await axios.post(`${BACKEND_URL}/api/quiz`, {
         ...quizData,
         questions
       });

@@ -32,6 +32,8 @@ interface Quiz {
   createdAt: string;
 }
 
+const BACKEND_URL = import.meta.env.VITE_BACKEND_URL;
+
 const QuizPage = () => {
   const [quizzes, setQuizzes] = useState<Quiz[]>([]);
   const [isLoading, setIsLoading] = useState(true);
@@ -68,7 +70,7 @@ const QuizPage = () => {
       if (selectedDifficulty !== 'all') params.append('difficulty', selectedDifficulty);
       if (searchTerm) params.append('search', searchTerm);
 
-      const response = await axios.get(`http://localhost:5000/api/quiz?${params}`);
+      const response = await axios.get(`${BACKEND_URL}/api/quiz?${params}`);
       setQuizzes(response.data.quizzes);
       setTotalPages(response.data.totalPages);
     } catch (error) {

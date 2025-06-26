@@ -50,6 +50,8 @@ interface Tournament {
   }>;
 }
 
+const BACKEND_URL = import.meta.env.VITE_BACKEND_URL;
+
 const TournamentPlayPage = () => {
   const { id } = useParams();
   const navigate = useNavigate();
@@ -65,7 +67,7 @@ const TournamentPlayPage = () => {
   useEffect(() => {
     const fetchTournament = async () => {
       try {
-        const response = await axios.get(`http://localhost:5000/api/tournament/${id}`);
+        const response = await axios.get(`${BACKEND_URL}/api/tournament/${id}`);
         setTournament(response.data);
         
         // Check if user has joined
@@ -84,7 +86,7 @@ const TournamentPlayPage = () => {
 
     const fetchLeaderboard = async () => {
       try {
-        const response = await axios.get(`http://localhost:5000/api/tournament/${id}/leaderboard`);
+        const response = await axios.get(`${BACKEND_URL}/api/tournament/${id}/leaderboard`);
         setLeaderboard(response.data);
       } catch (error) {
         console.error('Failed to fetch leaderboard:', error);
@@ -137,12 +139,12 @@ const TournamentPlayPage = () => {
     
     setIsJoining(true);
     try {
-      await axios.post(`http://localhost:5000/api/tournament/${id}/join`);
+      await axios.post(`${BACKEND_URL}/api/tournament/${id}/join`);
       setHasJoined(true);
       toast.success('Successfully joined tournament!');
       
       // Refresh tournament data
-      const response = await axios.get(`http://localhost:5000/api/tournament/${id}`);
+      const response = await axios.get(`${BACKEND_URL}/api/tournament/${id}`);
       setTournament(response.data);
     } catch (error: any) {
       const message = error.response?.data?.message || 'Failed to join tournament';

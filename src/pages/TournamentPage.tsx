@@ -44,6 +44,8 @@ interface Tournament {
   isPrivate: boolean;
 }
 
+const BACKEND_URL = import.meta.env.VITE_BACKEND_URL;
+
 const TournamentPage = () => {
   const [tournaments, setTournaments] = useState<Tournament[]>([]);
   const [isLoading, setIsLoading] = useState(true);
@@ -69,7 +71,7 @@ const TournamentPage = () => {
 
       if (statusFilter !== 'all') params.append('status', statusFilter);
 
-      const response = await axios.get(`http://localhost:5000/api/tournament?${params}`);
+      const response = await axios.get(`${BACKEND_URL}/api/tournament?${params}`);
       setTournaments(response.data.tournaments);
       setTotalPages(response.data.totalPages);
     } catch (error) {

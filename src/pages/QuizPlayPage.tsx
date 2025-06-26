@@ -38,6 +38,8 @@ interface Quiz {
   difficulty: string;
 }
 
+const BACKEND_URL = import.meta.env.VITE_BACKEND_URL;
+
 const QuizPlayPage = () => {
   const { id } = useParams();
   const navigate = useNavigate();
@@ -55,7 +57,7 @@ const QuizPlayPage = () => {
   useEffect(() => {
     const fetchQuiz = async () => {
       try {
-        const response = await axios.get(`http://localhost:5000/api/quiz/${id}`);
+        const response = await axios.get(`${BACKEND_URL}/api/quiz/${id}`);
         setQuiz(response.data);
         setSelectedAnswers(new Array(response.data.questions.length).fill(-1));
         setTimeLeft(response.data.questions[0]?.timeLimit || 30);
@@ -116,7 +118,7 @@ const QuizPlayPage = () => {
     
     setIsSubmitting(true);
     try {
-      const response = await axios.post(`http://localhost:5000/api/quiz/${id}/submit`, {
+      const response = await axios.post(`${BACKEND_URL}/api/quiz/${id}/submit`, {
         answers: selectedAnswers
       });
       
