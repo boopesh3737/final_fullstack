@@ -20,7 +20,7 @@ const io = new Server(server, {
   cors: {
     origin: [
       'http://localhost:5173',
-      'https://final-fullstack-umber.vercel.app/'
+      'https://final-fullstack-umber.vercel.app'
     ],
     methods: ["GET", "POST"],
     credentials: true
@@ -31,7 +31,7 @@ const io = new Server(server, {
 app.use(cors({
   origin: [
     'http://localhost:5173',
-    'https://final-fullstack-umber.vercel.app/'
+    'https://final-fullstack-umber.vercel.app'
   ],
   credentials: true
 }));
